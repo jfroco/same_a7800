@@ -11,7 +11,9 @@
 
 function mainProject(_target, _subtarget)
 local projname
-if (_OPTIONS["SOURCES"] == nil) and (_OPTIONS["SOURCEFILTER"] == nil) then
+if _OPTIONS["osd"] == "retro" then
+	projname = "same_a7800"
+elseif (_OPTIONS["SOURCES"] == nil) and (_OPTIONS["SOURCEFILTER"] == nil) then
 	if (_target == _subtarget) then
 		projname = _target
 	else

@@ -8,8 +8,9 @@
 #endif
 
 #define HAVE_RGB32
-//FIXME: re-add way to handle 16/32 bit
-#if (!defined(HAVE_OPENGL) && !defined(HAVE_RGB32)) || (!defined(HAVE_OPENGLES) && !defined(HAVE_RGB32))
+// FIXME: re-add way to handle 16/32 bit
+#if (!defined(HAVE_OPENGL) && !defined(HAVE_RGB32)) ||                         \
+    (!defined(HAVE_OPENGLES) && !defined(HAVE_RGB32))
 
 #ifndef M16B
 #define M16B
@@ -23,51 +24,47 @@
 #define PIXEL_TYPE UINT16
 #endif
 
-#define CORE_NAME "mame"
+#define CORE_NAME "same_a7800"
 #define RETRO_PATH_MAX 512
 
-enum
-{
-   RETROPAD_B,
-   RETROPAD_Y,
-   RETROPAD_SELECT,
-   RETROPAD_START,
-   RETROPAD_PAD_UP,
-   RETROPAD_PAD_DOWN,
-   RETROPAD_PAD_LEFT,
-   RETROPAD_PAD_RIGHT,
-   RETROPAD_A,
-   RETROPAD_X,
-   RETROPAD_L,
-   RETROPAD_R,
-   RETROPAD_L2,
-   RETROPAD_R2,
-   RETROPAD_L3,
-   RETROPAD_R3,
-   RETROPAD_TOTAL
+enum {
+  RETROPAD_B,
+  RETROPAD_Y,
+  RETROPAD_SELECT,
+  RETROPAD_START,
+  RETROPAD_PAD_UP,
+  RETROPAD_PAD_DOWN,
+  RETROPAD_PAD_LEFT,
+  RETROPAD_PAD_RIGHT,
+  RETROPAD_A,
+  RETROPAD_X,
+  RETROPAD_L,
+  RETROPAD_R,
+  RETROPAD_L2,
+  RETROPAD_R2,
+  RETROPAD_L3,
+  RETROPAD_R3,
+  RETROPAD_TOTAL
 };
 
-enum
-{
-   RETRO_SETTING_LIGHTGUN_MODE_DISABLED,
-   RETRO_SETTING_LIGHTGUN_MODE_POINTER,
-   RETRO_SETTING_LIGHTGUN_MODE_LIGHTGUN
+enum {
+  RETRO_SETTING_LIGHTGUN_MODE_DISABLED,
+  RETRO_SETTING_LIGHTGUN_MODE_POINTER,
+  RETRO_SETTING_LIGHTGUN_MODE_LIGHTGUN
 };
 
-enum
-{
-   RETRO_SETTING_LIGHTGUN_OFFSCREEN_MODE_FREE,
-   RETRO_SETTING_LIGHTGUN_OFFSCREEN_MODE_TOP_LEFT,
-   RETRO_SETTING_LIGHTGUN_OFFSCREEN_MODE_BOTTOM_RIGHT,
+enum {
+  RETRO_SETTING_LIGHTGUN_OFFSCREEN_MODE_FREE,
+  RETRO_SETTING_LIGHTGUN_OFFSCREEN_MODE_TOP_LEFT,
+  RETRO_SETTING_LIGHTGUN_OFFSCREEN_MODE_BOTTOM_RIGHT,
 };
 
-enum
-{
-   ROTATION_MODE_NONE,
-   ROTATION_MODE_LIBRETRO,
-   ROTATION_MODE_INTERNAL,
-   ROTATION_MODE_TATE_ROL,
-   ROTATION_MODE_TATE_ROR
+enum {
+  ROTATION_MODE_NONE,
+  ROTATION_MODE_LIBRETRO,
+  ROTATION_MODE_INTERNAL,
+  ROTATION_MODE_TATE_ROL,
+  ROTATION_MODE_TATE_ROR
 };
 
 extern bool retro_load_ok;
@@ -80,8 +77,8 @@ extern const char *retro_save_directory;
 extern const char *retro_system_directory;
 extern const char *retro_content_directory;
 
-extern int  lightgun_mode;
-extern int  lightgun_offscreen_mode;
+extern int lightgun_mode;
+extern int lightgun_offscreen_mode;
 extern bool mouse_enable;
 extern bool cheats_enable;
 extern bool alternate_renderer;

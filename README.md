@@ -1,3 +1,40 @@
+# SAME A7800
+
+SAME_A7800 is a Single Machine Emulator for Libretro. It is a specialized fork of MAME (via the MAME-Libretro project) that compiles only the Atari 7800 driver. In accordance with the MAME team's preferences regarding forks, the MAME branding has been removed from the project title. The original MAME license is included below.
+
+## BIOS Requirements
+
+To run this core, you must place a7800.zip in your RetroArch system directory:
+
+```
+  Name: a7800.zip
+CRC-32: 4b8568d4
+   MD4: a655fcce78600876dbafecf48b5982fc
+   MD5: e5424ae3d709f6dc3b07e93aa78d5f3f
+ SHA-1: cdfa82e27a21ecf3616e48e028916c37aee2ab03
+```
+
+## Supported Formats
+
+Games must be in .a78 (headered) format. It should include inforamtion about special features (like POKEY sound chip), like:
+
+```
+  Name: Ballblazer (NTSC) (Atari-Lucasfilm) (1987).a78
+CRC-32: d63731cb
+   MD4: 6ddceff4b6e0e76c09f30a2fc3b700f9
+   MD5: e98f27104887fa6516dcb0136795369e
+ SHA-1: 4e296807b098cdbc1a97a57b0f4a816a5fe1a3d9
+```
+
+```
+  Name: Commando (NTSC) (Atari) (1989).a78
+CRC-32: aed722c9
+   MD4: 350dafdb6359bbbb8cceea998a687da5
+   MD5: bceb74456fa54cc066fbe0529f714314
+ SHA-1: 11df9afb50ccb84d7afb4f4eddb9c2e701b60759
+```
+
+
 # **Libretro notice** #
 
 Before sending bug reports to the upstream bug tracker, make sure the bugs are reproducible in the latest standalone release.

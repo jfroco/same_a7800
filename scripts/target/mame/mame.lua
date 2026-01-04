@@ -53,7 +53,10 @@ function linkProjects_mame_mame(_target, _subtarget)
 		end
 	end
 	table.sort(projects)
-	table.insert(projects, "shared") -- must stay at the end
+	-- table.insert(projects, "shared") -- must stay at the end
+	if os.isdir(path.join(MAME_DIR, "src", _target, "shared")) then
+		table.insert(projects, "shared")
+	end
 	links(projects)
 end
 

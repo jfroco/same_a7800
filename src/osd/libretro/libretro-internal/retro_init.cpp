@@ -17,7 +17,6 @@
 
 #include "libretro.h"
 #include "options.h"
-#include "osdepend.h"
 
 #include "modules/lib/osdobj_common.h"
 #include "modules/lib/osdlib.h"
@@ -87,6 +86,7 @@ static char MparentPath[RETRO_PATH_MAX];
 static char MgameName[RETRO_PATH_MAX];
 static char MsystemName[RETRO_PATH_MAX];
 static char gameName[RETRO_PATH_MAX];
+static char forcedSystem[6] = "a7800";
 
 bool get_MgamePath(void)
 {
@@ -285,7 +285,8 @@ static int parseParentPath(const char *path, char *parentPath)
 static int getGameInfo(const char *gameName, int *rotation, int *driverIndex, bool *arcade)
 {
    int gameFound = 0;
-   int num       = driver_list::find(gameName);
+  // int num       = driver_list::find(gameName);
+  int num = driver_list::find(forcedSystem);
 
    if (!gameName[0])
       return gameFound;
@@ -582,10 +583,9 @@ static void Set_Path_Option(void)
    Add_Option((char*)"-rompath");
 
    if (retro_system_directory)
-      snprintf(tmp_dir, sizeof(tmp_dir), "%s;%s%c%s%c%s;%s%c%s%c%s",
+      snprintf(tmp_dir, sizeof(tmp_dir), "%s;%s",
             g_rom_dir,
-            retro_system_directory, slash, CORE_NAME, slash, "bios",
-            retro_system_directory, slash, CORE_NAME, slash, "roms");
+            retro_system_directory);
    else
       snprintf(tmp_dir, sizeof(tmp_dir), "%s", g_rom_dir);
 
@@ -603,6 +603,7 @@ static void Set_Path_Option(void)
 //  main
 //============================================================
 
+
 static int execute_game(char *path)
 {
    char tmp_dir[4096];
@@ -613,6 +614,7 @@ static int execute_game(char *path)
    /* Find if the driver exists for MgameName.
     * If not, check if a driver exists for MsystemName.
     * Otherwise, exit. */
+   strcpy(MsystemName, forcedSystem); // Force SAME subsystem
    if (getGameInfo(MgameName, &gameRot, &driverIndex, &arcade) == 0)
    {
       log_cb(RETRO_LOG_ERROR, "Driver not found: %s\n", MgameName);
@@ -635,44 +637,49 @@ static int execute_game(char *path)
    Set_Rotation_Option(gameRot);
    Set_Path_Option();
 
-   if (!boot_to_osd_enable && g_rom_dir[0])
-   {
-      if (softlist_enable)
-      {
-         if (!arcade)
-         {
-            /* Must have valid system name for adding it */
-            if (getGameInfo(MsystemName, &gameRot, &driverIndex, &arcade))
-               Add_Option(MsystemName);
+   log_cb(RETRO_LOG_DEBUG, "SAME A7800 added: %s -cart %s\n", forcedSystem, gameName);
+   Add_Option(forcedSystem);
+   Add_Option((char *)"-cart");
+   Add_Option((char *)gameName);
 
-            if (!boot_to_bios_enable)
-            {
-               if (!softlist_auto)
-                  Add_Option((char*)mediaType);
-               Add_Option(MgameName);
-            }
-         }
-         else
-            Add_Option(MgameName);
-      }
-      else
-      {
-         if (!strcmp(mediaType, "-rom"))
-            Add_Option(MgameName);
-         else
-         {
-            Add_Option(MsystemName);
-            Add_Option((char*)mediaType);
-            Add_Option((char*)gameName);
-         }
-      }
-   }
-   else if (MgamePath[0])
-   {
-      Add_Option((char*)("-rompath"));
-      snprintf(tmp_dir, sizeof(tmp_dir), "%s;%s", MgamePath, MparentPath);
-      Add_Option((char*)(tmp_dir));
-   }
+   // if (!boot_to_osd_enable && g_rom_dir[0])
+   // {
+   //    if (softlist_enable)
+   //    {
+   //       if (!arcade)
+   //       {
+   //          /* Must have valid system name for adding it */
+   //          if (getGameInfo(MsystemName, &gameRot, &driverIndex, &arcade))
+   //             Add_Option(MsystemName);
+
+   //          if (!boot_to_bios_enable)
+   //          {
+   //             if (!softlist_auto)
+   //                Add_Option((char*)mediaType);
+   //             Add_Option(MgameName);
+   //          }
+   //       }
+   //       else
+   //          Add_Option(MgameName);
+   //    }
+   //    else
+   //    {
+   //       if (!strcmp(mediaType, "-rom"))
+   //          Add_Option(MgameName);
+   //       else
+   //       {
+   //          Add_Option(MsystemName);
+   //          Add_Option((char*)mediaType);
+   //          Add_Option((char*)gameName);
+   //       }
+   //    }
+   // }
+   // else if (MgamePath[0])
+   // {
+   //    Add_Option((char*)("-rompath"));
+   //    snprintf(tmp_dir, sizeof(tmp_dir), "%s;%s", MgamePath, MparentPath);
+   //    Add_Option((char*)(tmp_dir));
+   // }
 
    return 0;
 }
